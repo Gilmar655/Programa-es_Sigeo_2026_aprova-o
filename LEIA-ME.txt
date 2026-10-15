@@ -1,0 +1,76 @@
+DASHBOARD PROGRAMACOES 2026 - INSTRUCOES DE USO
+===============================================
+
+1. EXTRAIR A PASTA ZIP COMPLETA no computador que possui o arquivo Excel.
+   Nao execute o arquivo .bat ainda dentro do ZIP.
+
+2. TER PYTHON 3 INSTALADO NO WINDOWS.
+   Caso nao esteja instalado, obtenha em https://www.python.org/downloads/
+   Marque "Add Python to PATH" na instalacao.
+   Nao sao necessarias bibliotecas adicionais (sem pip install).
+
+3. DAR DOIS CLIQUES EM "INICIAR_DASHBOARD.bat".
+   O navegador sera aberto em http://127.0.0.1:8765/
+   Mantenha a janela do terminal aberta durante o uso.
+
+4. ABRIR E EDITAR NORMALMENTE O EXCEL:
+   C:\Users\BR0101687168\OneDrive - Enel Spa\Documents\Programações_2026\Programações_2026.xlsx
+   Ao salvar uma alteracao ou acrescentar uma linha, o painel detectara a nova
+   versao e atualizará os indicadores, graficos e tabela em aproximadamente
+   5 segundos (desde que o arquivo esteja disponivel para leitura).
+   Nao precisa fechar ou atualizar o navegador.
+
+5. A planilha ORIGINAL NAO E ALTERADA pelo dashboard.
+   O leitor local acessa o arquivo de forma somente leitura.
+
+O QUE O PAINEL MOSTRA
+--------------------
+- Total de programacoes e total de projetos distintos
+- Status Programacao e Status Gilmar EM SEPARADO
+- Programacoes dos proximos 7 dias; quantidades por tipo de intervencao
+- Grafico semanal/mensal, responsaveis, regional inferida pelo projeto
+- Agenda de proximos eventos; pontos de atencao e registros repetidos
+- Tabela integral com pesquisas, filtros, classificacao e exportacao CSV
+- Novas linhas lidas automaticamente, inclusive em novas abas que possuam
+  os mesmos cabecalhos de Projeto/Data Programacao e campos correspondentes.
+  O dashboard mostra um aviso quando identificar abas sem esses cabecalhos
+
+CASO O CAMINHO DO EXCEL MUDE
+----------------------------
+Edite a linha:
+set "EXCEL_PROGRAMACOES=..."
+dentro de INICIAR_DASHBOARD.bat e substitua o caminho pelo novo local.
+
+Alternativamente, no terminal:
+py -3 servidor.py --excel "C:\caminho\para\Programações_2026.xlsx"
+
+AVISOS IMPORTANTES
+------------------
+- Um arquivo HTML ou site no GitHub Pages, sozinho, NAO consegue monitorar
+  uma pasta C:\... no Windows: os navegadores bloqueiam esse acesso por seguranca.
+- Por isso o modo AUTOMATICO exige o servidor Python local em execucao.
+- Se abrir index.html diretamente, vera a PREVIA INICIAL da base anexada,
+  mas ela NAO sera sincronizada com as modificacoes do seu computador.
+- O servidor usa SOMENTE 127.0.0.1 (acesso local), nao expoe a planilha na rede.
+- Nenhum dado da planilha e enviado para internet pelo servidor.
+- O arquivo deve estar efetivamente sincronizado e disponivel no OneDrive.
+- Se o Excel estiver salvando/indisponivel, o painel continua mostrando a
+  ultima base valida e tenta ler novamente nos proximos ciclos.
+- Se existirem varias linhas com o mesmo projeto, serao contadas como
+  programacoes separadas e como um projeto unico no indicador de projetos.
+- O codigo LES/ABC identifica regional apenas quando consta do projeto;
+  nao e uma coluna originalmente presente na planilha fornecida.
+- "Datas anteriores a hoje" NAO indica automaticamente obra atrasada:
+  esse indicador so sinaliza datas para conferencia.
+
+CONTEUDO DA PASTA
+-----------------
+index.html              Interface visual do dashboard
+estilos.css             Aparencia e responsividade
+dashboard.js           Filtros, graficos, indicadores, exportacao
+dados_iniciais.js      Previa de referencia do Excel anexado
+servidor.py             Leitura automatica local do Excel (sem dependencias)
+INICIAR_DASHBOARD.bat   Inicializacao automatica para Windows
+LEIA-ME.txt             Este manual
+
+Para encerrar: CTRL+C na janela preta do servidor.

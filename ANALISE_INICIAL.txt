@@ -1,0 +1,22 @@
+ANÁLISE INICIAL — PROGRAMAÇÕES DE PROJETOS 2026
+Fonte: Programações_2026.xlsx (anexo de 15/10/2026)
+Nota: este resumo retrata apenas o arquivo inicial; o dashboard lê a planilha atual a cada 5 segundos.
+
+Abas analisadas: 15_10_2026
+Programações: 14
+Projetos distintos: 13
+Período programado: 2026-10-18 a 2026-11-22
+Programações mensais: 2026-10: 2, 2026-11: 12
+
+Intervenções: BRA: 3, FI: 8, PIE: 3
+Responsáveis: Gilmar: 5, Italo: 2, Nathan: 7
+Regiões (inferidas pelos códigos do projeto): ABC: 4, LES: 10
+Status Programação: Pendente de Aprovação: 14
+Status Gilmar: Aprovado: 5, Não preenchido: 9
+
+OBSERVAÇÕES E LIMITAÇÕES
+- Status Gilmar e Status Programação são colunas diferentes: aprovações de Gilmar não mudam automaticamente o status geral da programação.
+- Um mesmo projeto pode ter mais de uma programação, em datas ou tipos de intervenção diferentes.
+- O dashboard trata regional como informação derivada do código do projeto, não como campo original do Excel.
+- Datas já transcorridas não equivalem, por si só, a atraso de execução; exigem conferência.
+- O painel consulta o arquivo local configurado e não altera nem salva a planilha Excel.

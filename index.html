@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f8ff">
+  <meta name="description" content="Dashboard operacional de programações 2026, com leitura automática da planilha Excel local.">
+  <title>Programações 2026 | Painel de Projetos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="topbar-content">
+      <a href="#inicio" class="brand" aria-label="Início do Dashboard">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">enel<span class="brand-point">.</span></span>
+        <span class="brand-split"></span>
+        <span class="brand-subtitle">GESTÃO DE PROJETOS<br><strong>LESTE / ABC · 2026</strong></span>
+      </a>
+      <div class="header-right">
+        <div class="header-clock"><strong id="relogio">--:--:--</strong><span id="data-hoje">Carregando data</span></div>
+        <div class="connection-chip" id="connection-chip"><span class="status-dot"></span><span id="connection-text">Verificando Excel</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="inicio">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> CONTROLE OPERACIONAL <span class="eyebrow-minor">/ PROJETOS</span></div>
+        <h1>Programações <span>2026</span><span class="hero-small-circle">●</span></h1>
+        <p>Painel de acompanhamento de projetos, responsáveis, intervenções e aprovações. Dados organizados a partir da programação operacional.</p>
+        <div class="hero-actions">
+          <a class="hero-button" href="#base-dados">Consultar base completa <span aria-hidden="true">↗</span></a>
+          <div class="hero-support"><span class="pulse-circle"></span><span>Monitoramento do arquivo Excel<br><strong id="hero-mode">Aguardando conexão local</strong></span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit art-o1"></div><div class="art-orbit art-o2"></div><div class="art-orbit art-o3"></div>
+        <div class="art-corner"></div>
+        <div class="art-node art-n1"></div><div class="art-node art-n2"></div><div class="art-node art-n3"></div>
+        <svg class="art-path" viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M-10 239C59 241 64 86 145 123C205 150 199 237 275 181C338 134 334 76 420 61" stroke="#33d1f0" stroke-width="3" stroke-dasharray="8 12" opacity=".65"/><path d="M-10 239C59 241 64 86 145 123C205 150 199 237 275 181C338 134 334 76 420 61" stroke="#FFFFFF" stroke-width="1.5" opacity=".5"/></svg>
+        <div class="art-card art-card-top"><span>CARTEIRA</span><strong id="hero-projects">—</strong><small>projetos únicos</small></div>
+        <div class="art-card art-card-bottom"><span>INTERVENÇÕES</span><strong id="hero-types">—</strong><small>tipos registrados</small></div>
+      </div>
+    </section>
+
+    <section class="source-bar" aria-label="Situação da atualização">
+      <div class="source-icon">↻</div>
+      <div class="source-copy"><strong id="source-label">Preparando leitura da base de dados</strong><small id="source-description">Os dados exibidos são referentes ao Excel anexado.</small></div>
+      <div class="source-right"><span id="last-sync">ÚLTIMA LEITURA: —</span><button id="sync-button" class="btn-mini" type="button" title="Verificar agora">Atualizar agora ↻</button></div>
+    </section>
+
+    <section class="filters-shell" id="filtros">
+      <div class="section-header compact"><div><span class="section-caption">EXPLORAR DADOS</span><h2>Filtros inteligentes</h2></div><div class="filters-count" id="filter-count">— registros na seleção</div></div>
+      <div class="filters-grid">
+        <label class="filter-field search-field"><span>Buscar projeto ou informação</span><div class="search-box"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><input id="f-search" type="search" placeholder="Código, nome, tipo..." autocomplete="off"></div></label>
+        <label class="filter-field"><span>Responsável</span><select id="f-responsavel"><option value="">Todos</option></select></label>
+        <label class="filter-field"><span>Intervenção</span><select id="f-tipo"><option value="">Todas</option></select></label>
+        <label class="filter-field"><span>Regional <em>via projeto</em></span><select id="f-regional"><option value="">Todas</option></select></label>
+        <label class="filter-field"><span>Status programação</span><select id="f-status"><option value="">Todos</option></select></label>
+        <label class="filter-field"><span>Status Gilmar</span><select id="f-gilmar"><option value="">Todos</option><option value="__VAZIO__">Não preenchido</option></select></label>
+        <label class="filter-field"><span>Mês programado</span><select id="f-mes"><option value="">Todos os meses</option></select></label>
+        <label class="filter-field"><span>Janela de tempo</span><select id="f-janela"><option value="">Todas as datas</option><option value="7">Próximos 7 dias</option><option value="30">Próximos 30 dias</option><option value="past">Datas anteriores a hoje</option></select></label>
+      </div>
+      <div class="filter-foot"><span>Os indicadores, gráficos, agenda e tabela acompanham os filtros selecionados.</span><button class="btn-reset" id="reset-filters" type="button">× Limpar filtros</button></div>
+    </section>
+
+    <section class="kpi-section" aria-label="Indicadores principais">
+      <div class="section-header"><div><span class="section-caption">VISÃO CONSOLIDADA</span><h2>Indicadores principais</h2></div><span class="section-explainer">Atualizados conforme a seleção</span></div>
+      <div class="kpi-grid">
+        <article class="kpi-card kpi-blue"><div class="kpi-head"><span>Programações</span><span class="kpi-icon">▣</span></div><strong id="k-total">0</strong><div class="kpi-foot" id="k-total-sub">Registros de intervenção</div><div class="kpi-decoration"></div></article>
+        <article class="kpi-card kpi-cyan"><div class="kpi-head"><span>Projetos únicos</span><span class="kpi-icon">◇</span></div><strong id="k-unique">0</strong><div class="kpi-foot" id="k-unique-sub">Sem dupla contagem</div><div class="kpi-decoration"></div></article>
+        <article class="kpi-card kpi-amber"><div class="kpi-head"><span>Pendentes aprovação</span><span class="kpi-icon">◷</span></div><strong id="k-pending">0</strong><div class="kpi-foot" id="k-pending-sub">Status da programação</div><div class="kpi-decoration"></div></article>
+        <article class="kpi-card kpi-green"><div class="kpi-head"><span>Aprovados · Gilmar</span><span class="kpi-icon">✓</span></div><strong id="k-approved">0</strong><div class="kpi-foot" id="k-approved-sub">Status de acompanhamento</div><div class="kpi-decoration"></div></article>
+        <article class="kpi-card kpi-purple"><div class="kpi-head"><span>Próximos 7 dias</span><span class="kpi-icon">↗</span></div><strong id="k-next">0</strong><div class="kpi-foot">Programações no período</div><div class="kpi-decoration"></div></article>
+        <article class="kpi-card kpi-slate"><div class="kpi-head"><span>Tipos de intervenção</span><span class="kpi-icon">⬡</span></div><strong id="k-types">0</strong><div class="kpi-foot" id="k-types-sub">Classificações registradas</div><div class="kpi-decoration"></div></article>
+      </div>
+    </section>
+
+    <section class="analytics-grid" aria-label="Gráficos de análise">
+      <article class="panel panel-wide">
+        <div class="panel-header"><div><span class="section-caption">DISTRIBUIÇÃO TEMPORAL</span><h3>Programações por período</h3><p>Volume de atividades conforme as datas do Excel</p></div><div class="toggle-group"><button class="toggle-button is-active" type="button" id="btn-week" aria-pressed="true">Semana</button><button class="toggle-button" type="button" id="btn-month" aria-pressed="false">Mês</button></div></div>
+        <div class="chart-wrap"><div id="trend-chart" class="trend-chart" role="img" aria-label="Gráfico de programações por período"></div></div>
+        <div class="chart-bottom"><span id="trend-foot">—</span><span class="chart-key"><b class="key-dot blue"></b>Programações</span></div>
+      </article>
+      <article class="panel panel-small"><div class="panel-header"><div><span class="section-caption">CARACTERÍSTICA OPERACIONAL</span><h3>Tipos de intervenção</h3><p>Participação no total programado</p></div></div><div class="donut-layout"><div class="donut" id="type-donut"><div class="donut-hole"><span>TOTAL</span><strong id="donut-total">0</strong><small>atividades</small></div></div><div class="donut-legend" id="type-legend"></div></div></article>
+      <article class="panel panel-wide"><div class="panel-header"><div><span class="section-caption">ALOCAÇÃO DE ATIVIDADES</span><h3>Programações por responsável</h3><p>Distribuição do volume e dos tipos de intervenção</p></div><div class="micro-legend"><span><b class="key-dot blue"></b>FI</span><span><b class="key-dot aqua"></b>BRA</span><span><b class="key-dot purple"></b>PIE</span></div></div><div class="bars-area" id="responsavel-bars"></div></article>
+      <article class="panel panel-small"><div class="panel-header"><div><span class="section-caption">PRÓXIMOS EVENTOS</span><h3>Agenda de projetos</h3><p>Próximas datas com programação</p></div></div><div class="agenda-list" id="agenda-list"></div></article>
+      <article class="panel panel-half"><div class="panel-header"><div><span class="section-caption">DISTRIBUIÇÃO GEOGRÁFICA</span><h3>Regionais dos projetos</h3><p>Identificadas pelo código LES / ABC do projeto</p></div></div><div id="regional-bars" class="regional-bars"></div><div class="panel-note">* Regional inferida a partir do identificador do projeto, não de uma coluna original.</div></article>
+      <article class="panel panel-half"><div class="panel-header"><div><span class="section-caption">CONTROLE DE QUALIDADE</span><h3>Pontos de atenção</h3><p>Informações para priorizar a conferência</p></div></div><div id="alert-list" class="alert-list"></div></article>
+    </section>
+
+    <section class="table-panel" id="base-dados">
+      <div class="table-heading"><div><span class="section-caption">TRANSPARÊNCIA DOS REGISTROS</span><h2>Base de programações <span class="table-heading-pill">EXCEL</span></h2><p>Todas as informações da planilha, inclusive registros repetidos de um mesmo projeto em datas diferentes.</p></div><div class="table-actions"><span class="table-count" id="table-count">0 registros</span><button class="export-button" type="button" id="export-csv"><span aria-hidden="true">⇩</span> Exportar CSV</button></div></div>
+      <div class="table-scroll"><table id="data-table"><thead><tr><th data-key="projeto">Projeto <span>↕</span></th><th data-key="data">Data programada <span>↕</span></th><th data-key="responsavel">Responsável <span>↕</span></th><th data-key="status_programacao">Status programação <span>↕</span></th><th data-key="tipo_intervencao">Intervenção <span>↕</span></th><th data-key="status_gilmar">Status Gilmar <span>↕</span></th><th data-key="regional">Regional* <span>↕</span></th><th data-key="aba">Aba / linha <span>↕</span></th></tr></thead><tbody id="data-tbody"></tbody></table></div>
+      <div class="table-footer"><div><label for="page-size">Exibir</label><select id="page-size"><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option></select><span>registros por página</span></div><div class="pagination"><span id="page-info">Página 1</span><button id="page-prev" type="button" aria-label="Página anterior">‹</button><button id="page-next" type="button" aria-label="Próxima página">›</button></div></div>
+    </section>
+
+    <footer class="footer"><div><strong>PAINEL DE PROGRAMAÇÕES 2026</strong><span>Dashboard operacional · consulta interna</span></div><div>Fonte: <span id="footer-source">Programações_2026.xlsx</span> · Atualização automática local via Python</div></footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="dados_iniciais.js"></script>
+<script src="dashboard.js" defer></script>
+</body>
+</html>
